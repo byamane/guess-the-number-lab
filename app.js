@@ -19,19 +19,19 @@ const game = {
   smallestNum: 1,
   secretNum: null,
   prevGuesses: [],
-  // getGuess: function() {
-  //   this.
-  // }
+  getGuess: function(){
+    console.log(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
+  },
   play: function() {
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
 
       return this.secretNum
-      this.prevGuesses += 1; // keeping running track of number of user's previous guesses
+      // this.prevGuesses += 1; // keeping running track of number of user's previous guesses
   }
 }
 
-// console.log(game.getGuess());
-console.log(game.play());
-console.log(game.prevGuesses.length);
+game.getGuess();
+// console.log(game.play());
+// console.log(game.prevGuesses.length);
 
