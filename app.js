@@ -19,19 +19,6 @@ const game = {
   smallestNum: 1,
   secretNum: null,
   prevGuesses: [],
-
-  // Create render function that will produce alerts based off userGuess
-  render: function(){
-    if(this.prevGuesses[this.prevGuesses.length - 1] === this.secretNum){
-      alert(`Congrats! You have guessed the number in ${this.prevGuesses.length} attempts!`)
-    } 
-      else if(this.prevGuesses[this.prevGuesses.length - 1] > this.secretNum){
-        alert(`Your guess is too high! Previous guesses: ${this.prevGuesses.join(', ')}`)
-      }
-      else if(this.prevGuesses[this.prevGuesses.length - 1] < this.secretNum){
-        alert(`Your guess is too low! Previous guesses: ${this.prevGuesses.join(', ')}`)
-      }
-  },
   
   getGuess: function(){
     let userGuess = +prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}:`);
@@ -55,6 +42,7 @@ const game = {
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     
+    console.log(this.secretNum)
   // Do...while loop that compares userGuess to secretNum
     // Will prompt user to continually guess until secretNum has been guessed 
     // Meanwhile, also storing the incorrect guesses into our previously initialized prevGuesses array
@@ -69,12 +57,25 @@ const game = {
     // End game once correct answer has been reached
   },
 
+// Create render function that will produce alerts based off userGuess
+  render: function(){
+    if(this.prevGuesses[this.prevGuesses.length - 1] === this.secretNum){
+      alert(`Congrats! You have guessed the number in ${this.prevGuesses.length} attempts!`)
+    } 
+      else if(this.prevGuesses[this.prevGuesses.length - 1] > this.secretNum){
+        alert(`Your guess is too high! Previous guesses: ${this.prevGuesses.join(', ')}`)
+      }
+      else if(this.prevGuesses[this.prevGuesses.length - 1] < this.secretNum){
+        alert(`Your guess is too low! Previous guesses: ${this.prevGuesses.join(', ')}`)
+      }
+  },
+
   // Adjust upper/lower range set to user's guess if these conditions are met 
-  adjustRange: function(guess){
-    if(guess > this.smallestNum && guess < this.secretNum){
-      this.smallestNum = guess
-    } else if (guess < this.biggestNum && guess > this.secretNum){
-      this.biggestNum = guess
+  adjustRange: function(){
+    if(this.prevGuesses[this.prevGuesses.length - 1] > this.smallestNum && this.prevGuesses[this.prevGuesses.length - 1] < this.secretNum){
+      this.smallestNum = this.prevGuesses[this.prevGuesses.length - 1]
+    } else if (this.prevGuesses[this.prevGuesses.length - 1] < this.biggestNum && this.prevGuesses[this.prevGuesses.length - 1] > this.secretNum){
+      this.biggestNum = this.prevGuesses[this.prevGuesses.length - 1]
     }
   }
 
@@ -87,5 +88,3 @@ const game = {
   // }
 }
 game.play();
-
-console.log(game.secretNum)
