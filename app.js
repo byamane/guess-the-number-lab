@@ -23,14 +23,14 @@ const game = {
   // Create render function that will produce alerts based off userGuess
   render: function(){
     if(this.prevGuesses[this.prevGuesses.length - 1] === this.secretNum){
-      alert(`Congrats! You have guessed the number in ${this.prevGuesses.length}!`)
+      alert(`Congrats! You have guessed the number in ${this.prevGuesses.length} attempts!`)
     } 
       else if(this.prevGuesses[this.prevGuesses.length - 1] > this.secretNum){
         alert(`Your guess is too high! Previous guesses: ${this.prevGuesses.join(', ')}`)
       }
       else if(this.prevGuesses[this.prevGuesses.length - 1] < this.secretNum){
         alert(`Your guess is too low! Previous guesses: ${this.prevGuesses.join(', ')}`)
-      } 
+      }
   },
   
   getGuess: function(){
@@ -48,7 +48,9 @@ const game = {
   },
 
   play: function(){
-
+  // Player can set upper/lower thresholds by invoking the setRange function
+    // this.setRange();
+    
   // Generate secretNum which will be the target number the user aims to guess
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
@@ -60,10 +62,30 @@ const game = {
     do{
       this.prevGuesses.push(this.getGuess())
       this.render();
+      this.adjustRange();
     } while(this.prevGuesses[this.prevGuesses.length - 1] !== this.secretNum);
 
     return
     // End game once correct answer has been reached
+  },
+
+  // Adjust upper/lower range set to user's guess if these conditions are met 
+  adjustRange: function(guess){
+    if(guess > this.smallestNum && guess < this.secretNum){
+      this.smallestNum = guess
+    } else if (guess < this.biggestNum && guess > this.secretNum){
+      this.biggestNum = guess
+    }
   }
+
+  // Player can set the range of upper/lower numbers at the start of game
+  // setRange: function(){
+  //   let userMin = +prompt(`Enter your game's minimum number:`)
+  //   userMin = this.smallestNum
+  //   let userMax = +prompt(`Enter your game's maximum number:`)
+  //   userMax = this.biggestNum
+  // }
 }
 game.play();
+
+console.log(game.secretNum)
