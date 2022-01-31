@@ -20,7 +20,7 @@ const game = {
   secretNum: null,
   prevGuesses: [],
 
-  // Create render function that will create alerts based off userGuess
+  // Create render function that will produce alerts based off userGuess
   render: function(){
     if(this.prevGuesses[this.prevGuesses.length - 1] === this.secretNum){
       alert(`Congrats! You have guessed the number in ${this.prevGuesses.length}!`)
@@ -35,7 +35,10 @@ const game = {
   
   getGuess: function(){
     let userGuess = +prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}:`);
-    // Setting userGuess to prompt user to input number between 1 and 100. The parseInt() function will point userGuess to NaN if the user inputs a guess that is not a number
+    // Setting userGuess to prompt user to input number between 1 and 100
+    // The unary plus operator (+prompt) will point userGuess to NaN if the user inputs a guess that is not a number
+        // Resolves issue where answers such as "10-!@#!%%@$" would still register as valid answer
+    
     // Next, I want to incorporate a while loop that will run as many times needed while the user gives an incorrect guess that is not a number or within the upper/lower thresholds
     while(isNaN(userGuess)|| userGuess < this.smallestNum ||userGuess > this.biggestNum){
         userGuess = +prompt(`Guess must be a number between ${this.smallestNum} and ${this.biggestNum}. Please try again.`)
@@ -46,11 +49,13 @@ const game = {
 
   play: function(){
 
-  // Generate secretNum which will be the target number the user is aiming to guess
+  // Generate secretNum which will be the target number the user aims to guess
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     
-    // do while loop that compares userGuess to secretNum; Will prompt user to continually guess until secretNum has been guessed by the user meanwhile storing the incorrect guesses into our previously initialized prevGuesses array
+  // Do...while loop that compares userGuess to secretNum
+    // Will prompt user to continually guess until secretNum has been guessed 
+    // Meanwhile, also storing the incorrect guesses into our previously initialized prevGuesses array
 
     do{
       this.prevGuesses.push(this.getGuess())
@@ -58,7 +63,7 @@ const game = {
     } while(this.prevGuesses[this.prevGuesses.length - 1] !== this.secretNum);
 
     return
-      
+    // End game once correct answer has been reached
   }
 }
 game.play();
