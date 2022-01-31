@@ -26,19 +26,24 @@ const game = {
     while(isNaN(userGuess)|| userGuess < this.smallestNum ||userGuess > this.biggestNum){
         userGuess = +prompt(`Guess must be a number between ${this.smallestNum} and ${this.biggestNum}. Please try again.`)
       }
+      return userGuess;
+      // Return user's guess once they have input an appropriate guess per the above while loop's conditions
   },
 
-  play: function() {
+  play: function(){
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     
-    // for(let i = 0;)
+    // do while loop that compares userGuess to secretNum; Will prompt user to continually guess until secretNum has been guessed by the user meanwhile storing the incorrect guesses into our previously initialized prevGuesses array
 
-      return this.secretNum
-      this.prevGuesses += 1; // keeping running track of number of user's previous guesses
+    do{
+      this.prevGuesses.push(this.getGuess());
+    } while(this.prevGuesses[this.prevGuesses.length - 1] !== this.secretNum)
+
+    return this.secretNum
+      
   }
 }
 
-game.getGuess();
-console.log(game.play());
+game.play();
 console.log(game.prevGuesses.length);
